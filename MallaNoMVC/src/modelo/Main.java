@@ -27,6 +27,7 @@ public class Main {
         f.setSize(800, 600);
         f.add(p);
         f.setDefaultCloseOperation(3);
+        f.addMouseListener(p);
         f.setVisible(true);
         //*******************************
     }

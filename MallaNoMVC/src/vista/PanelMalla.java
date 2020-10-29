@@ -7,6 +7,9 @@ package vista;
 
 //<editor-fold defaultstate="collapsed" desc="imports">
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import static java.lang.System.out;
 import javax.swing.JPanel;
 //</editor-fold>
 
@@ -14,11 +17,13 @@ import javax.swing.JPanel;
  *
  * @author David
  */
-public class PanelMalla extends JPanel {
+public class PanelMalla extends JPanel implements MouseListener {
     
     //<editor-fold defaultstate="collapsed" desc="vars">
-    int filas = 0,
-        columnas = 0;
+    int filasM = 0,
+        columnasM = 0,
+        anchoP = 0,
+        altoP = 0;
     boolean cuadrado = false;
 //</editor-fold>
     
@@ -32,11 +37,11 @@ public class PanelMalla extends JPanel {
     
     //<editor-fold defaultstate="collapsed" desc="setters">
     private void setFilas(int filas) {
-        this.filas = filas;
+        this.filasM = filas;
     }
 
     private void setColumnas(int columnas) {
-        this.columnas = columnas;
+        this.columnasM = columnas;
     }
 
     private void setCuadrado(boolean cuadrado) {
@@ -48,20 +53,19 @@ public class PanelMalla extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
-        dibujaCuadricula(g, filas, columnas, cuadrado);
+        anchoP = getWidth();
+        altoP = getHeight();
+        dibujaCuadricula(g, filasM, columnasM, anchoP, altoP, cuadrado);
     }
 //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="dibujaCuadricula">
-    void dibujaCuadricula(Graphics g, int filas, int columnas, boolean cuadrado) {
+    void dibujaCuadricula(Graphics g, int filas, int columnas, int anchoP, int altoP, boolean cuadrado) {
         
         //<editor-fold defaultstate="collapsed" desc="vars">
         /* ancho panel anchoP, alto panel altoP
          * por defecto no es cuadrado
-         */
-        int anchoP = getWidth(),
-            altoP = getHeight();
-        
+        */
         if (cuadrado) {
             anchoP = altoP;
         } 
@@ -84,7 +88,7 @@ public class PanelMalla extends JPanel {
         }
         
         if (cuadrado) {
-            g.drawLine(columnas*anchoP/columnas, 0, columnas*anchoP/columnas, altoP);
+            g.drawLine(altoP, 0, altoP, altoP);
         } 
         //*********************************************************
 //</editor-fold>
@@ -95,7 +99,60 @@ public class PanelMalla extends JPanel {
     //<editor-fold defaultstate="collapsed" desc="tostring">
     @Override
     public String toString() {
-        return "PanelMalla{" + "filas=" + filas + ", columnas=" + columnas + '}';
+        return "PanelMalla{" + "filas=" + filasM + ", columnas=" + columnasM + '}';
+    }
+//</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="mouse listener">
+    
+    @Override
+    public void mousePressed(MouseEvent e) {
+        int x = e.getX(), 
+            y = e.getY();
+        //añadeCelda(devuelveCuadranteX(x, ancho), devuelveCuadranteY(y, alto));
+        
+        //anchoP=altoP
+        if (cuadrado) {
+            int xMax = altoP;
+            
+            if (x>xMax) {
+                x = xMax;
+            }
+            
+            out.println("xMax: "+xMax+", x: "+x+", y: "+y+", filaC: " + getFilaCelda(y, altoP, filasM)+", columnaC: "+getColumnaCelda(x, altoP, columnasM));
+        }
+        //out.println("x: "+x+", y: "+y+", fila: "+getCeldaX(x,anchoP,filasM) + ", columna: " + columnasM);
+    }
+    
+    //<editor-fold defaultstate="collapsed" desc="mL no usado">
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+//</editor-fold>
+    
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="devuelveCuadrantes">
+    int getColumnaCelda(int x, int anchoP, int columnasM) {
+        //x *= columnasM/anchoP;
+        return x * columnasM / anchoP; 
+    }
+    
+    int getFilaCelda(int y, int altoP, int filasM) {
+        //y *= filasM/altoP;
+        return getColumnaCelda(y, altoP, filasM); //y * filasM / altoP; 
     }
 //</editor-fold>
 }
