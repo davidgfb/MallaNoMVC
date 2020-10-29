@@ -121,6 +121,7 @@ public class PanelMalla extends JPanel implements MouseListener {
             
             out.println("xMax: "+xMax+", x: "+x+", y: "+y+", filaC: " + getFilaCelda(y, altoP, filasM)+", columnaC: "+getColumnaCelda(x, altoP, columnasM));
         }
+        
         //out.println("x: "+x+", y: "+y+", fila: "+getCeldaX(x,anchoP,filasM) + ", columna: " + columnasM);
     }
     
@@ -147,11 +148,13 @@ public class PanelMalla extends JPanel implements MouseListener {
     //<editor-fold defaultstate="collapsed" desc="devuelveCuadrantes">
     int getColumnaCelda(int x, int anchoP, int columnasM) {
         //x *= columnasM/anchoP;
+        //anchoP no puede ser 0
         return x * columnasM / anchoP; 
     }
     
     int getFilaCelda(int y, int altoP, int filasM) {
         //y *= filasM/altoP;
+        //filasM no puede ser 0
         return getColumnaCelda(y, altoP, filasM); //y * filasM / altoP; 
     }
 //</editor-fold>
