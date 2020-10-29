@@ -20,7 +20,7 @@ public class Main {
     //<editor-fold defaultstate="collapsed" desc="main">
     public static void main(String[] args) {
         //********* vista   *************
-        PanelMalla p = new PanelMalla(4,4);
+        PanelMalla p = new PanelMalla(4, 4, true);
         out.println(p.toString());
         JFrame f = new JFrame();
         
